@@ -1,0 +1,59 @@
+# Deploy no Coolify: recurso "Docker Compose" apontando para este arquivo.
+# Os valores ${...} aparecem na aba Environment Variables do Coolify.
+# SERVICE_PASSWORD_* e SERVICE_FQDN_* são gerados pelo próprio Coolify.
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    environment:
+      # Domínio + HTTPS pelo proxy do Coolify, encaminhando para a porta 3000.
+      - SERVICE_FQDN_API_3000
+      - PORT=3000
+      - API_CLIENTS=${API_CLIENTS:?defina API_CLIENTS}
+      - API_SPORTS_KEY=${API_SPORTS_KEY:?defina API_SPORTS_KEY}
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://${SERVICE_USER_POSTGRES}:${SERVICE_PASSWORD_POSTGRES}@postgres:5432/api_sports
+      - API_SPORTS_DAILY_LIMIT=${API_SPORTS_DAILY_LIMIT:-10000}
+      - API_SPORTS_MAX_REQUESTS_PER_MINUTE=${API_SPORTS_MAX_REQUESTS_PER_MINUTE:-10}
+      - API_SPORTS_BACKGROUND_MAX_REQUESTS_PER_MINUTE=${API_SPORTS_BACKGROUND_MAX_REQUESTS_PER_MINUTE:-6}
+      - FOOTBALL_SYNC_ENABLED=${FOOTBALL_SYNC_ENABLED:-false}
+      - FOOTBALL_SYNC_DISCOVERY=${FOOTBALL_SYNC_DISCOVERY:-false}
+      - FOOTBALL_SYNC_FIXTURE_IDS=${FOOTBALL_SYNC_FIXTURE_IDS:-}
+      - BASKETBALL_SYNC_ENABLED=${BASKETBALL_SYNC_ENABLED:-false}
+      - BASKETBALL_SYNC_LEAGUE_IDS=${BASKETBALL_SYNC_LEAGUE_IDS:-12}
+      - OBSERVE_APP_KEY=${OBSERVE_APP_KEY:-}
+      - OBSERVE_APP_SECRET=${OBSERVE_APP_SECRET:-}
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=api_sports
+      - POSTGRES_USER=${SERVICE_USER_POSTGRES}
+      - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRES}
+    volumes:
+      - sports-postgres:/var/lib/postgresql/data
+      # Na PRIMEIRA subida (volume vazio) roda migrations/001..003 em ordem.
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  sports-postgres:
