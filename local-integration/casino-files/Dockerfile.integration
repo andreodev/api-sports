@@ -1,0 +1,12 @@
+FROM node:20-bookworm-slim
+WORKDIR /app
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+COPY prisma ./prisma
+RUN DATABASE_URL=postgresql://local:local@localhost:5432/local npx prisma generate
+COPY . .
+RUN npm run build
+EXPOSE 3333
+CMD ["node", "dist/src/local-readonly.js"]

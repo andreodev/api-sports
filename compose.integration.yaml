@@ -1,0 +1,81 @@
+name: sports-integration-local
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: sports_integration_test
+      POSTGRES_USER: sports_test
+      POSTGRES_PASSWORD: local-test-only
+    ports:
+      - '127.0.0.1:55434:5432'
+    networks: [isolated]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U sports_test -d sports_integration_test']
+      interval: 3s
+      timeout: 2s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '127.0.0.1:56381:6379'
+    networks: [isolated]
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 3s
+      timeout: 2s
+      retries: 20
+  sports:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://sports_test:local-test-only@postgres:5432/sports_integration_test
+      REDIS_URL: redis://redis:6379
+      API_CLIENTS: '{"casino-local":"local-test-key-not-for-production-0000000000"}'
+      API_SPORTS_KEY: local-provider-not-enabled
+      FOOTBALL_SYNC_ENABLED: 'false'
+    ports:
+      - '127.0.0.1:53001:3000'
+    networks: [isolated]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+  casino:
+    build:
+      context: ./.tmp/sports-local/casino-api
+      dockerfile: Dockerfile.integration
+    environment:
+      DATABASE_URL: postgresql://sports_test:local-test-only@postgres:5432/casino_integration_test
+      SPORTS_PREVIEW_ENABLED: 'true'
+      SPORTS_PREVIEW_URL: http://sports:3000
+      SPORTS_PREVIEW_KEY: local-test-key-not-for-production-0000000000
+      JWT_SECRET: local-test-only-not-for-production
+      PORT: '3333'
+    networks: [isolated]
+    depends_on:
+      postgres: { condition: service_healthy }
+      sports: { condition: service_started }
+  frontend:
+    build:
+      context: ./.tmp/sports-local/casino-web
+      dockerfile: Dockerfile.integration
+    environment:
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: '1'
+      API_URL: http://casino:3333
+      NEXT_PUBLIC_API_URL: http://127.0.0.1:53002
+    networks: [isolated]
+    depends_on:
+      casino: { condition: service_started }
+  gateway:
+    image: nginx:alpine
+    volumes:
+      - ./local-integration/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - '127.0.0.1:53003:3000'
+      - '127.0.0.1:53002:3333'
+    networks: [isolated, loopback_access]
+    depends_on:
+      frontend: { condition: service_started }
+networks:
+  isolated:
+    internal: true
+  loopback_access: {}

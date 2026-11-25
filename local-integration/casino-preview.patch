@@ -1,0 +1,46 @@
+diff --git a/src/sportsbook/sportsbook.service.ts b/src/sportsbook/sportsbook.service.ts
+index e78ac0b..d8bf0bf 100644
+--- a/src/sportsbook/sportsbook.service.ts
++++ b/src/sportsbook/sportsbook.service.ts
+@@ -1,10 +1,17 @@
+-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
++import {
++  HttpException,
++  HttpStatus,
++  Injectable,
++  Logger,
++  Optional,
++} from '@nestjs/common';
+ 
+ import { Prisma } from '@prisma/client';
+ 
+ import { PrismaService } from 'src/prisma/prisma.service';
+ 
+ import { TicketSettingsService } from 'src/bet/ticket/ticket-settings.service';
++import { CentralPreview } from './central-preview';
+ 
+ import {
+   CANONICAL_ODD_ORDER,
+@@ -281,6 +288,7 @@ export class SportsbookService {
+     private readonly prismaService: PrismaService,
+     private readonly ticketSettings: TicketSettingsService,
+     private readonly cache: SportsbookCache,
++    @Optional() private readonly centralPreview?: CentralPreview,
+   ) {}
+ 
+   // -------------------------------------------------------------------------
+@@ -781,10 +789,13 @@ export class SportsbookService {
+         );
+       }
+ 
+-      return {
++      const result = {
+         serverTime: now.toISOString(),
+         ...toMatchDetail(row, now, settings),
+       };
++      return this.centralPreview
++        ? this.centralPreview.apply(result, row.externalId)
++        : result;
+     });
+   }
+ 

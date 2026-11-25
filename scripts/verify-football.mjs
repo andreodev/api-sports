@@ -1,0 +1,11 @@
+const fixtureId = process.argv[2];
+if (!/^[1-9]\d*$/.test(fixtureId ?? '')) throw new Error('Informe o ID da partida');
+const clients = JSON.parse(process.env.API_CLIENTS ?? '{}');
+const apiKey = Object.values(clients)[0];
+if (typeof apiKey !== 'string') throw new Error('Configure uma chave de consumidor');
+const response = await fetch(`http://127.0.0.1:3000/v1/sports/football/fixtures/${fixtureId}/odds`, { headers: { 'x-api-key': apiKey } });
+const result = await response.json();
+const types = Array.isArray(result.selections) ? result.selections.map((row) => row.type) : [];
+const groups = { result: types.some((s) => ['HOME_WIN', 'DRAW', 'AWAY_WIN'].includes(s)), goals: types.some((s) => /^(OVER|UNDER)_/.test(s)), doubleChance: types.some((s) => s.startsWith('DC_')), bothTeams: types.some((s) => s.startsWith('BTTS_')) };
+console.log(JSON.stringify({ httpStatus: response.status, fixtureId: result.fixtureId, bookmakerId: result.bookmakerId, status: result.status, bettable: result.bettable, reason: result.reason, selections: types.length, groups }));
+if (!response.ok || result.fixtureId !== fixtureId || result.bettable !== false || !Object.values(groups).every(Boolean)) process.exitCode = 1;

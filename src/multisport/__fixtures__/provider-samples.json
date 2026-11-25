@@ -1,0 +1,1521 @@
+{
+  "note": "Public event and odds fields sampled with GET requests on 2026-10-29. No credentials, request headers or account data. Bookmakers retain only full-game Home/Away markets.",
+  "observedAt": "2026-10-29T18:39:40.769209+00:00",
+  "sports": {
+    "basketball": {
+      "event": {
+        "id": 508662,
+        "date": "2026-10-29T19:00:00+00:00",
+        "time": "19:00",
+        "timestamp": 1793300400,
+        "timezone": "UTC",
+        "stage": null,
+        "week": "9",
+        "venue": "Beogradska arena",
+        "status": {
+          "long": "Not Started",
+          "short": "NS",
+          "timer": null
+        },
+        "league": {
+          "id": 120,
+          "name": "Euroleague",
+          "type": "cup",
+          "season": 2026,
+          "logo": "https://media.api-sports.io/basketball/leagues/120.png"
+        },
+        "country": {
+          "id": 55,
+          "name": "Europe",
+          "code": null,
+          "flag": null
+        },
+        "teams": {
+          "home": {
+            "id": 1065,
+            "name": "Crvena Zvezda Meridianbet",
+            "logo": "https://media.api-sports.io/basketball/teams/1065.png"
+          },
+          "away": {
+            "id": 522,
+            "name": "Bayern",
+            "logo": "https://media.api-sports.io/basketball/teams/522.png"
+          }
+        },
+        "scores": {
+          "home": {
+            "quarter_1": null,
+            "quarter_2": null,
+            "quarter_3": null,
+            "quarter_4": null,
+            "over_time": null,
+            "total": null
+          },
+          "away": {
+            "quarter_1": null,
+            "quarter_2": null,
+            "quarter_3": null,
+            "quarter_4": null,
+            "over_time": null,
+            "total": null
+          }
+        }
+      },
+      "odds": {
+        "league": {
+          "id": 120,
+          "name": "Euroleague",
+          "type": "Cup",
+          "season": 2026,
+          "logo": "https://media.api-sports.io/basketball/leagues/120.png"
+        },
+        "country": {
+          "id": 55,
+          "name": "Europe",
+          "code": null,
+          "flag": null
+        },
+        "game": {
+          "id": 508662,
+          "date": "2026-10-29T19:00:00+00:00",
+          "time": "19:00",
+          "timestamp": 1793300400,
+          "timezone": "UTC",
+          "stage": null,
+          "week": "9",
+          "venue": "Beogradska arena",
+          "status": {
+            "long": "Not Started",
+            "short": "NS",
+            "timer": null
+          },
+          "league": {
+            "id": 120,
+            "name": "Euroleague",
+            "type": "Cup",
+            "season": 2026,
+            "logo": "https://media.api-sports.io/basketball/leagues/120.png"
+          },
+          "country": {
+            "id": 55,
+            "name": "Europe",
+            "code": null,
+            "flag": null
+          },
+          "teams": {
+            "home": {
+              "id": 1065,
+              "name": "Crvena Zvezda Meridianbet",
+              "logo": "https://media.api-sports.io/basketball/teams/1065.png"
+            },
+            "away": {
+              "id": 522,
+              "name": "Bayern",
+              "logo": "https://media.api-sports.io/basketball/teams/522.png"
+            }
+          },
+          "scores": {
+            "home": {
+              "quarter_1": null,
+              "quarter_2": null,
+              "quarter_3": null,
+              "quarter_4": null,
+              "over_time": null,
+              "total": null
+            },
+            "away": {
+              "quarter_1": null,
+              "quarter_2": null,
+              "quarter_3": null,
+              "quarter_4": null,
+              "over_time": null,
+              "total": null
+            }
+          }
+        },
+        "bookmakers": [
+          {
+            "id": 2,
+            "name": "Marathon Bet",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.32"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.50"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "name": "1xBet",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.33"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.52"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 31,
+            "name": "Betano",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.28"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.45"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 26,
+            "name": "WilliamHill",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.29"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.60"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "name": "Bet365",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.29"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.50"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "name": "Betfair",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.29"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.70"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 34,
+            "name": "BetVictor",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.29"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.40"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 12,
+            "name": "Pinnacle",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.31"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.63"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 13,
+            "name": "SBO",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.28"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "3.17"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "baseball": {
+      "event": {
+        "id": 189996,
+        "date": "2026-10-29T17:30:00+00:00",
+        "time": "17:30",
+        "timestamp": 1793295000,
+        "timezone": "UTC",
+        "week": null,
+        "status": {
+          "long": "Not Started",
+          "short": "NS"
+        },
+        "country": {
+          "id": 7,
+          "name": "Cuba",
+          "code": "CU",
+          "flag": "https://media.api-sports.io/flags/cu.svg"
+        },
+        "league": {
+          "id": 9,
+          "name": "Serie Nacional",
+          "type": "League",
+          "logo": "https://media.api-sports.io/baseball/leagues/9.png",
+          "season": 2026
+        },
+        "teams": {
+          "home": {
+            "id": 121,
+            "name": "Artemisa",
+            "logo": "https://media.api-sports.io/baseball/teams/121.png"
+          },
+          "away": {
+            "id": 128,
+            "name": "Industriales",
+            "logo": "https://media.api-sports.io/baseball/teams/128.png"
+          }
+        },
+        "scores": {
+          "home": {
+            "hits": null,
+            "errors": null,
+            "innings": {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null,
+              "5": null,
+              "6": null,
+              "7": null,
+              "8": null,
+              "9": null,
+              "extra": null
+            },
+            "total": null
+          },
+          "away": {
+            "hits": null,
+            "errors": null,
+            "innings": {
+              "1": null,
+              "2": null,
+              "3": null,
+              "4": null,
+              "5": null,
+              "6": null,
+              "7": null,
+              "8": null,
+              "9": null,
+              "extra": null
+            },
+            "total": null
+          }
+        }
+      },
+      "odds": {
+        "league": {
+          "id": 9,
+          "name": "Serie Nacional",
+          "type": "League",
+          "season": 2026,
+          "logo": "https://media.api-sports.io/baseball/leagues/9.png"
+        },
+        "country": {
+          "id": 7,
+          "name": "Cuba",
+          "code": "CU",
+          "flag": "https://media.api-sports.io/flags/cu.svg"
+        },
+        "game": {
+          "id": 189996,
+          "date": "2026-10-29T17:30:00+00:00",
+          "time": "17:30",
+          "timestamp": 1793295000,
+          "timezone": "UTC",
+          "week": null,
+          "status": {
+            "long": "Not Started",
+            "short": "NS"
+          },
+          "country": {
+            "id": 7,
+            "name": "Cuba",
+            "code": "CU",
+            "flag": "https://media.api-sports.io/flags/cu.svg"
+          },
+          "league": {
+            "id": 9,
+            "name": "Serie Nacional",
+            "type": "League",
+            "season": 2026,
+            "logo": "https://media.api-sports.io/baseball/leagues/9.png"
+          },
+          "teams": {
+            "home": {
+              "id": 121,
+              "name": "Artemisa",
+              "logo": "https://media.api-sports.io/baseball/teams/121.png"
+            },
+            "away": {
+              "id": 128,
+              "name": "Industriales",
+              "logo": "https://media.api-sports.io/baseball/teams/128.png"
+            }
+          },
+          "scores": {
+            "home": {
+              "hits": null,
+              "errors": null,
+              "innings": {
+                "1": null,
+                "2": null,
+                "3": null,
+                "4": null,
+                "5": null,
+                "6": null,
+                "7": null,
+                "8": null,
+                "9": null,
+                "extra": null
+              },
+              "total": null
+            },
+            "away": {
+              "hits": null,
+              "errors": null,
+              "innings": {
+                "1": null,
+                "2": null,
+                "3": null,
+                "4": null,
+                "5": null,
+                "6": null,
+                "7": null,
+                "8": null,
+                "9": null,
+                "extra": null
+              },
+              "total": null
+            }
+          }
+        },
+        "bookmakers": [
+          {
+            "id": 22,
+            "name": "WilliamHill",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "2.30"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.57"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 10,
+            "name": "Marathon",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "2.24"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.52"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 1,
+            "name": "1xbet",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "2.31"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.57"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 28,
+            "name": "Betano",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "2.27"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.57"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "hockey": {
+      "event": {
+        "id": 434448,
+        "date": "2026-10-29T18:45:00+00:00",
+        "time": "18:45",
+        "timestamp": 1793299500,
+        "timezone": "UTC",
+        "week": null,
+        "timer": null,
+        "status": {
+          "long": "Not Started",
+          "short": "NS"
+        },
+        "country": {
+          "id": 27,
+          "name": "Switzerland",
+          "code": "CH",
+          "flag": "https://media.api-sports.io/flags/ch.svg"
+        },
+        "league": {
+          "id": 52,
+          "name": "Swiss League",
+          "type": "League",
+          "logo": "https://media.api-sports.io/hockey/leagues/52.png",
+          "season": 2026
+        },
+        "teams": {
+          "home": {
+            "id": 575,
+            "name": "Thurgau",
+            "logo": "https://media.api-sports.io/hockey/teams/575.png"
+          },
+          "away": {
+            "id": 919,
+            "name": "Chur",
+            "logo": "https://media.api-sports.io/hockey/teams/919.png"
+          }
+        },
+        "scores": {
+          "home": null,
+          "away": null
+        },
+        "periods": {
+          "first": null,
+          "second": null,
+          "third": null,
+          "overtime": null,
+          "penalties": null
+        },
+        "events": false
+      },
+      "odds": {
+        "league": {
+          "id": 52,
+          "name": "Swiss League",
+          "type": "League",
+          "season": 2026,
+          "logo": "https://media.api-sports.io/hockey/leagues/52.png"
+        },
+        "country": {
+          "id": 27,
+          "name": "Switzerland",
+          "code": "CH",
+          "flag": "https://media.api-sports.io/flags/ch.svg"
+        },
+        "game": {
+          "id": 434448,
+          "date": "2026-10-29T18:45:00+00:00",
+          "time": "18:45",
+          "timestamp": 1793299500,
+          "timezone": "UTC",
+          "week": null,
+          "timer": null,
+          "status": {
+            "long": "Not Started",
+            "short": "NS"
+          },
+          "country": {
+            "id": 27,
+            "name": "Switzerland",
+            "code": "CH",
+            "flag": "https://media.api-sports.io/flags/ch.svg"
+          },
+          "league": {
+            "id": 52,
+            "name": "Swiss League",
+            "type": "League",
+            "season": 2026,
+            "logo": "https://media.api-sports.io/hockey/leagues/52.png"
+          },
+          "teams": {
+            "home": {
+              "id": 575,
+              "name": "Thurgau",
+              "logo": "https://media.api-sports.io/hockey/teams/575.png"
+            },
+            "away": {
+              "id": 919,
+              "name": "Chur",
+              "logo": "https://media.api-sports.io/hockey/teams/919.png"
+            }
+          },
+          "scores": {
+            "home": null,
+            "away": null
+          },
+          "periods": {
+            "first": null,
+            "second": null,
+            "third": null,
+            "overtime": null,
+            "penalties": null
+          },
+          "events": false
+        },
+        "bookmakers": [
+          {
+            "id": 22,
+            "name": "WilliamHill",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.91"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.80"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "name": "bet365",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.85"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.85"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "name": "Marathon",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.89"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.82"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 5,
+            "name": "Betfair",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.91"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.80"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 29,
+            "name": "BetVictor",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.87"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.80"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 7,
+            "name": "Pncl",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.90"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.83"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 15,
+            "name": "Sbo",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.85"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.77"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 8,
+            "name": "1xBet",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.89"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.82"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "handball": {
+      "event": {
+        "id": 199904,
+        "date": "2026-10-29T16:00:00+00:00",
+        "time": "16:00",
+        "timestamp": 1793289600,
+        "timezone": "UTC",
+        "week": "8",
+        "status": {
+          "long": "Not Started",
+          "short": "NS"
+        },
+        "country": {
+          "id": 26,
+          "name": "Poland",
+          "code": "PL",
+          "flag": "https://media.api-sports.io/flags/pl.svg"
+        },
+        "league": {
+          "id": 127,
+          "name": "Central League",
+          "type": "League",
+          "logo": "https://media.api-sports.io/handball/leagues/127.png",
+          "season": 2026
+        },
+        "teams": {
+          "home": {
+            "id": 697,
+            "name": "Zaglebie",
+            "logo": "https://media.api-sports.io/handball/teams/697.png"
+          },
+          "away": {
+            "id": 720,
+            "name": "Biala Podlaska",
+            "logo": "https://media.api-sports.io/handball/teams/720.png"
+          }
+        },
+        "scores": {
+          "home": null,
+          "away": null
+        },
+        "periods": {
+          "first": {
+            "home": null,
+            "away": null
+          },
+          "second": {
+            "home": null,
+            "away": null
+          }
+        }
+      },
+      "odds": null
+    },
+    "rugby": {
+      "event": {
+        "id": 55973,
+        "date": "2026-10-31T00:00:00+00:00",
+        "time": "00:00",
+        "timestamp": 1793404800,
+        "timezone": "UTC",
+        "week": null,
+        "status": {
+          "long": "Not Started",
+          "short": "NS"
+        },
+        "country": {
+          "id": 26,
+          "name": "World",
+          "code": null,
+          "flag": null
+        },
+        "league": {
+          "id": 84,
+          "name": "Friendly International",
+          "type": "League",
+          "logo": "https://media.api-sports.io/rugby/leagues/84.png",
+          "season": 2026
+        },
+        "teams": {
+          "home": {
+            "id": 469,
+            "name": "USA",
+            "logo": "https://media.api-sports.io/rugby/teams/469.png"
+          },
+          "away": {
+            "id": 891,
+            "name": "Australia A",
+            "logo": "https://media.api-sports.io/rugby/teams/891.png"
+          }
+        },
+        "scores": {
+          "home": null,
+          "away": null
+        },
+        "periods": {
+          "first": {
+            "home": null,
+            "away": null
+          },
+          "second": {
+            "home": null,
+            "away": null
+          },
+          "overtime": {
+            "home": null,
+            "away": null
+          },
+          "second_overtime": {
+            "home": null,
+            "away": null
+          }
+        }
+      },
+      "odds": null
+    },
+    "volleyball": {
+      "event": {
+        "id": 211498,
+        "date": "2026-10-29T19:00:00+00:00",
+        "time": "19:00",
+        "timestamp": 1793300400,
+        "timezone": "UTC",
+        "week": null,
+        "status": {
+          "long": "Not Started",
+          "short": "NS"
+        },
+        "country": {
+          "id": 55,
+          "name": "Europe",
+          "code": null,
+          "flag": null
+        },
+        "league": {
+          "id": 257,
+          "name": "Challenge Cup Women",
+          "type": "Cup",
+          "logo": "https://media.api-sports.io/volley/leagues/257.png",
+          "season": 2026
+        },
+        "teams": {
+          "home": {
+            "id": 1240,
+            "name": "Franches Montagnes W",
+            "logo": "https://media.api-sports.io/volley/teams/1240.png"
+          },
+          "away": {
+            "id": 4374,
+            "name": "Sarajevo W",
+            "logo": "https://media.api-sports.io/volley/teams/4374.png"
+          }
+        },
+        "scores": {
+          "home": null,
+          "away": null
+        },
+        "periods": {
+          "first": {
+            "home": null,
+            "away": null
+          },
+          "second": {
+            "home": null,
+            "away": null
+          },
+          "third": {
+            "home": null,
+            "away": null
+          },
+          "fourth": {
+            "home": null,
+            "away": null
+          },
+          "fifth": {
+            "home": null,
+            "away": null
+          }
+        }
+      },
+      "odds": null
+    },
+    "american-football": {
+      "event": {
+        "game": {
+          "id": 21620,
+          "stage": "Regular Season",
+          "week": "Week 8",
+          "date": {
+            "timezone": "UTC",
+            "date": "2026-10-30",
+            "time": "00:15",
+            "timestamp": 1793319300
+          },
+          "venue": {
+            "name": "Lambeau Field",
+            "city": "Green Bay"
+          },
+          "status": {
+            "short": "NS",
+            "long": "Not Started",
+            "timer": null
+          }
+        },
+        "league": {
+          "id": 1,
+          "name": "NFL",
+          "season": "2026",
+          "logo": "https://media.api-sports.io/american-football/leagues/1.png",
+          "country": {
+            "name": "USA",
+            "code": "US",
+            "flag": "https://media.api-sports.io/flags/us.svg"
+          }
+        },
+        "teams": {
+          "home": {
+            "id": 15,
+            "name": "Green Bay Packers",
+            "logo": "https://media.api-sports.io/american-football/teams/15.png"
+          },
+          "away": {
+            "id": 19,
+            "name": "Carolina Panthers",
+            "logo": "https://media.api-sports.io/american-football/teams/19.png"
+          }
+        },
+        "scores": {
+          "home": {
+            "quarter_1": null,
+            "quarter_2": null,
+            "quarter_3": null,
+            "quarter_4": null,
+            "overtime": null,
+            "total": null
+          },
+          "away": {
+            "quarter_1": null,
+            "quarter_2": null,
+            "quarter_3": null,
+            "quarter_4": null,
+            "overtime": null,
+            "total": null
+          }
+        }
+      },
+      "odds": {
+        "game": {
+          "id": 21620
+        },
+        "league": {
+          "id": 1,
+          "name": "NFL",
+          "season": 2026,
+          "logo": "https://media.api-sports.io/american-football/leagues/1.png"
+        },
+        "country": {
+          "name": "USA",
+          "code": "US",
+          "flag": "https://media.api-sports.io/flags/us.svg"
+        },
+        "update": "2026-10-25T02:15:17+00:00",
+        "bookmakers": [
+          {
+            "id": 4,
+            "name": "Bet365",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.62"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "2.35"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "name": "Betfair",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.62"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "2.25"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 24,
+            "name": "BetVictor",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.57"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "2.30"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "name": "1xBet",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.62"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "2.25"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "name": "Betano",
+            "bets": [
+              {
+                "id": 1,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "1.65"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "2.30"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "mma": {
+      "event": {
+        "id": 2935,
+        "date": "2026-10-31T13:00:00+00:00",
+        "time": "13:00",
+        "timestamp": 1793451600,
+        "timezone": "UTC",
+        "slug": "UFC Fight Night: Moicano vs. Nolan",
+        "is_main": false,
+        "category": "Middleweight",
+        "status": {
+          "long": "Not Started",
+          "short": "NS"
+        },
+        "fighters": {
+          "first": {
+            "id": 2967,
+            "name": "Joe Kropschot",
+            "logo": "https://media.api-sports.io/mma/fighters/2967.png",
+            "winner": false
+          },
+          "second": {
+            "id": 2764,
+            "name": "Nick Klein",
+            "logo": "https://media.api-sports.io/mma/fighters/2764.png",
+            "winner": false
+          }
+        }
+      },
+      "odds": null,
+      "oddsWithDifferentFight": {
+        "fight": {
+          "id": 2955
+        },
+        "bookmakers": [
+          {
+            "id": 1,
+            "name": "Marathon",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "5.70"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.10"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 18,
+            "name": "Betfair",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "5.00"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.14"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "name": "BetVictor",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "6.00"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.14"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 9,
+            "name": "Pncl",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "6.50"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.13"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": 14,
+            "name": "Sbo",
+            "bets": [
+              {
+                "id": 2,
+                "name": "Home/Away",
+                "values": [
+                  {
+                    "value": "Home",
+                    "odd": "4.84"
+                  },
+                  {
+                    "value": "Away",
+                    "odd": "1.10"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "afl": {
+      "event": {
+        "game": {
+          "id": 3345
+        },
+        "league": {
+          "id": 1,
+          "season": 2026
+        },
+        "date": "2026-03-05T08:30:00+00:00",
+        "time": "08:30",
+        "timestamp": "1772699400",
+        "timezone": "UTC",
+        "round": "Regular Season",
+        "week": 0,
+        "venue": "Sydney Cricket Ground",
+        "attendance": null,
+        "status": {
+          "long": "Finished",
+          "short": "FT"
+        },
+        "teams": {
+          "home": {
+            "id": 14,
+            "name": "Sydney Swans",
+            "logo": "https://media.api-sports.io/afl/teams/14.png"
+          },
+          "away": {
+            "id": 3,
+            "name": "Carlton Blues",
+            "logo": "https://media.api-sports.io/afl/teams/3.png"
+          }
+        },
+        "scores": {
+          "home": {
+            "score": 132,
+            "goals": 20,
+            "behinds": 12,
+            "psgoals": 0,
+            "psbehinds": 0
+          },
+          "away": {
+            "score": 69,
+            "goals": 10,
+            "behinds": 9,
+            "psgoals": 0,
+            "psbehinds": 0
+          }
+        }
+      },
+      "odds": null,
+      "leagues": [
+        {
+          "id": 1,
+          "name": "AFL Premiership",
+          "logo": "https://media.api-sports.io/afl/leagues/1.png",
+          "season": 2026,
+          "start": "2026-03-05",
+          "end": "2026-09-26",
+          "current": false
+        }
+      ]
+    },
+    "formula-1": {
+      "event": {
+        "id": 2604,
+        "competition": {
+          "id": 21,
+          "name": "Mexico Grand Prix",
+          "location": {
+            "country": "Mexico",
+            "city": "Mexico"
+          }
+        },
+        "circuit": {
+          "id": 21,
+          "name": "Autódromo Hermanos Rodríguez",
+          "image": "https://media.api-sports.io/formula-1/circuits/21.png"
+        },
+        "season": 2026,
+        "type": "Race",
+        "laps": {
+          "current": null,
+          "total": 71
+        },
+        "fastest_lap": {
+          "driver": {
+            "id": null
+          },
+          "time": null
+        },
+        "distance": "305.4 Kms",
+        "timezone": "utc",
+        "date": "2026-11-01T20:00:00+00:00",
+        "weather": null,
+        "status": "Scheduled"
+      },
+      "odds": null
+    },
+    "nba": {
+      "event": {
+        "id": 17002,
+        "league": "standard",
+        "season": 2026,
+        "date": {
+          "start": "2026-10-29T00:00:00.000Z",
+          "end": null,
+          "duration": null
+        },
+        "stage": 2,
+        "status": {
+          "clock": null,
+          "halftime": false,
+          "short": 3,
+          "long": "Finished"
+        },
+        "periods": {
+          "current": 4,
+          "total": 4,
+          "endOfPeriod": false
+        },
+        "arena": {
+          "name": "United Center",
+          "city": "Chicago",
+          "state": "IL",
+          "country": null
+        },
+        "teams": {
+          "visitors": {
+            "id": 24,
+            "name": "New York Knicks",
+            "nickname": "Knicks",
+            "code": "NYK",
+            "logo": "https://upload.wikimedia.org/wikipedia/fr/3/34/Knicks_de_NY.png"
+          },
+          "home": {
+            "id": 6,
+            "name": "Chicago Bulls",
+            "nickname": "Bulls",
+            "code": "CHI",
+            "logo": "https://upload.wikimedia.org/wikipedia/en/6/67/Chicago_Bulls_logo.svg"
+          }
+        },
+        "scores": {
+          "visitors": {
+            "win": 0,
+            "loss": 0,
+            "series": {
+              "win": 0,
+              "loss": 0
+            },
+            "linescore": ["34", "22", "34", "43"],
+            "points": 133
+          },
+          "home": {
+            "win": 0,
+            "loss": 0,
+            "series": {
+              "win": 0,
+              "loss": 0
+            },
+            "linescore": ["33", "29", "34", "31"],
+            "points": 127
+          }
+        },
+        "officials": [],
+        "timesTied": null,
+        "leadChanges": null,
+        "nugget": null
+      },
+      "odds": null
+    }
+  }
+}

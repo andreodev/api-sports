@@ -1,0 +1,13 @@
+const fixture = process.argv[2];
+if (!/^[1-9]\d*$/.test(fixture ?? '')) throw new Error('Informe o ID da partida');
+const url = new URL('https://v3.football.api-sports.io/odds');
+url.search = new URLSearchParams({ fixture, bookmaker: '8' }).toString();
+const res = await fetch(url, { headers: { 'x-apisports-key': process.env.API_SPORTS_KEY }, signal: AbortSignal.timeout(15000), redirect: 'error' });
+const body = await res.json();
+if (!res.ok || !Array.isArray(body.response) || Object.keys(body.errors ?? {}).length || body.response.length !== 1) throw new Error('Resposta indisponível');
+const row = body.response[0];
+if (String(row.fixture?.id) !== fixture || row.bookmakers?.length !== 1 || row.bookmakers[0].id !== 8) throw new Error('Resposta inconsistente');
+const names = new Set(['Match Winner', 'Goals Over/Under', 'Double Chance', 'Both Teams Score']);
+const bets = row.bookmakers[0].bets.filter((bet) => names.has(bet.name));
+if (bets.length !== 4) throw new Error('Os quatro mercados não estão disponíveis');
+console.log(JSON.stringify({ capturedAt: new Date().toISOString(), fixture: row.fixture, update: row.update, bookmaker: { id: 8, name: row.bookmakers[0].name, bets } }, null, 2));
