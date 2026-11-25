@@ -1,0 +1,47 @@
+# Produção na VPS: docker compose -f compose.prod.yaml up -d --build
+# Os segredos ficam em .env.production (fora do git e fora da imagem).
+services:
+  api:
+    build: .
+    env_file: .env.production
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    # Só a própria VPS acessa a porta. Publique para fora por um proxy com HTTPS
+    # (nginx/Caddy), porque o app principal envia a chave no header x-api-key.
+    ports:
+      - '127.0.0.1:3000:3000'
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    env_file: .env.production
+    restart: unless-stopped
+    # Sem "ports": o banco não fica exposto na internet, só para a api.
+    volumes:
+      - sports-postgres:/var/lib/postgresql/data
+      # Na PRIMEIRA subida (volume vazio) roda migrations/001..003 em ordem.
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # Sem "ports": o Redis não fica exposto na internet, só para a api.
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  sports-postgres:

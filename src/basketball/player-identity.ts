@@ -7,7 +7,7 @@ function validId(value: unknown): value is string {
 
 /** The provider may invert first and last names. This is exact token matching,
  * not fuzzy matching: missing initials, suffixes or collisions remain unresolved. */
-function nameKey(value: unknown): string | null {
+export function nameKey(value: unknown): string | null {
   if (typeof value !== 'string' || value.length > 150) return null;
   const tokens = value.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim().split(/\s+/).filter(Boolean);
   if (tokens.length < 2 || tokens.length > 10) return null;

@@ -30,6 +30,7 @@ Invoke-RestMethod -Uri "$env:SPORTS_API_URL/v1/provider-catalog" -Headers @{ 'x-
 | `GET /v1/sports/football/fixtures/:id/odds` | Consulta sob demanda de odds pré-jogo de futebol, como prévia. |
 | `GET /v1/sports/football/fixtures/:id/sync` | Última leitura persistida pelo worker de futebol, como prévia. |
 | `GET /v1/sports/basketball/games/:id/player-markets` | Mercados individuais de jogadores de basquete, como prévia. |
+| `GET /v1/sports/basketball/games/:id/player-board` | Tudo de um jogo agrupado por jogador: linhas, odds por casa e estatísticas do jogo. |
 
 Os identificadores aceitos em `:sport` são `football`, `basketball`, `baseball`, `hockey`, `handball`, `rugby`, `volleyball`, `american-football`, `mma`, `afl`, `formula-1` e `nba`. `nba` é resolvido para basquete e retorna `sport: "basketball"`. O catálogo estático lista as modalidades multisport e suas capacidades; futebol também é aceito na rota de agenda, mas não aparece nesse catálogo.
 
@@ -101,6 +102,50 @@ O ID deve ser o `providerId` numérico do evento de basquete, não o `externalId
 As estatísticas mapeadas são `points`, `rebounds` e `assists`; `side` é `over` ou `under`. `team` pode ser `home`, `away` ou `null`. O nome não é um identificador confiável de jogador, e `overtimeIncluded: null` significa regra desconhecida. Podem existir várias casas ou nenhuma seleção. O cache dura 30 segundos, mas isso não garante que o preço original seja recente: confira `providerUpdatedAt`, que pode ser `null`.
 
 A API ainda não fornece cotação combinada para seleções correlacionadas no mesmo jogo, identidade confirmada de jogador ou regras de prorrogação e apuração. Não multiplique as odds individuais para inventar a cotação de “Criar Aposta”.
+
+### Quadro de jogadores por jogo
+
+```http
+GET /v1/sports/basketball/games/123456/player-board
+```
+
+Junta numa resposta os mercados de `player-markets` e as estatísticas do jogo (`/games/statistics/players`), agrupados por jogador, para o frontend montar o bilhete:
+
+```json
+{
+  "gameId": "123456",
+  "oddsObservedAt": "2026-11-25T20:00:00.000Z",
+  "statisticsObservedAt": "2026-11-25T20:00:01.000Z",
+  "statisticsError": null,
+  "players": [
+    {
+      "name": "Jogador Exemplo",
+      "playerId": "10",
+      "teamId": "1",
+      "team": "home",
+      "statistics": { "minutes": "34:12", "points": 22, "rebounds": 9, "assists": 4 },
+      "selections": [
+        {
+          "selectionId": "3f1c...",
+          "statistic": "points",
+          "side": "over",
+          "line": 20.5,
+          "bestOdd": 1.95,
+          "prices": [{ "bookmakerId": 2, "bookmaker": "Casa B", "providerMarketId": 117, "odd": 1.95, "providerLabel": "Jogador Exemplo - Over 20.5", "providerUpdatedAt": null }]
+        }
+      ]
+    }
+  ],
+  "bettable": false,
+  "combinationPricing": "UNAVAILABLE"
+}
+```
+
+- `selectionId` é estável entre leituras do mesmo jogo (serve para guardar a seleção no bilhete), mas não é identificador de aposta.
+- `statistics` é `null` antes do jogo ou quando o nome da casa não bate com exatamente um jogador; nesse caso `playerId` também é `null`. Jogadores com estatísticas e sem linhas aparecem com `selections: []`.
+- Se a consulta de estatísticas falhar, as odds continuam vindo e `statisticsError` vale `STATISTICS_UNAVAILABLE`.
+- Odds e estatísticas ficam 30 segundos em cache. Sem cache, cada leitura gasta até duas requisições ao provedor.
+- Valem as mesmas restrições de `player-markets`: não há cotação combinada para seleções do mesmo jogo.
 
 ## Identidade, falhas e limites
 
