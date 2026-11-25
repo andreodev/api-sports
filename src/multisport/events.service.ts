@@ -4,7 +4,8 @@ import { createClient } from 'redis';
 import { normalizeEvent } from './mapper.js';
 import { isApiSportsDate } from './provider-date.js';
 import { apiSportOf } from './sports-catalog.js';
-import { basketballPlayerMarkets } from './basketball-player-markets.js';
+import { basketballPlayerMarkets, type PlayerMarketSelection } from './basketball-player-markets.js';
+import { buildPlayerBoard } from '../basketball/player-board.js';
 import { normalizeFootballFixture } from '../football/fixtures.js';
 import { mapPrematchOdds } from '../football/football-odds.js';
 
@@ -222,6 +223,38 @@ export class EventsService implements OnApplicationShutdown {
       if (error instanceof BadGatewayException || error instanceof ServiceUnavailableException) throw error;
       throw new ServiceUnavailableException('Falha no cache esportivo');
     }
+  }
+
+  /** Everything the frontend needs to build a player slip for one game: every
+   * player line and price grouped by player, next to the player's game
+   * statistics when the game is live or finished. Display only: prices are not
+   * validated for wagering and combined odds are not priced here. */
+  async basketballPlayerBoard(gameId: string) {
+    if (!/^[1-9]\d{0,14}$/.test(gameId) || !Number.isSafeInteger(Number(gameId))) throw new BadRequestException('Identificador de partida inválido');
+    const markets = await this.basketballPlayerMarkets(gameId) as { observedAt: string; selections: PlayerMarketSelection[] };
+    let statistics: { observedAt: string; rows: unknown } | null = null;
+    let statisticsError: string | null = null;
+    try {
+      const redis = await this.redis();
+      const key = `api-sports:basketball:board-statistics:v1:${gameId}`;
+      const cached = await redis.get(key);
+      if (cached) statistics = JSON.parse(cached) as { observedAt: string; rows: unknown };
+      else {
+        const read = await this.basketballPlayerStatistics(gameId);
+        statistics = { observedAt: read.observedAt, rows: read.rows };
+        await redis.set(key, JSON.stringify(statistics), { EX: 30 });
+      }
+    } catch { statisticsError = 'STATISTICS_UNAVAILABLE'; }
+    const players = buildPlayerBoard(gameId, markets.selections, statistics?.rows ?? []);
+    return {
+      gameId,
+      oddsObservedAt: markets.observedAt,
+      statisticsObservedAt: statistics?.observedAt ?? null,
+      statisticsError,
+      players,
+      bettable: false as const,
+      combinationPricing: 'UNAVAILABLE' as const,
+    };
   }
 
   async footballOdds(fixtureId: string, priority: 'interactive' | 'background' = 'interactive') {

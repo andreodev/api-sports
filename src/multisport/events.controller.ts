@@ -15,6 +15,9 @@ export class EventsController {
   @Get('basketball/games/:id/player-markets')
   playerMarkets(@Param('id') id: string) { return this.eventsService.basketballPlayerMarkets(id); }
 
+  @Get('basketball/games/:id/player-board')
+  playerBoard(@Param('id') id: string) { return this.eventsService.basketballPlayerBoard(id); }
+
   @Get('basketball/games/:id/player-statistics')
   playerStatistics(@Param('id') id: string) { return this.eventsService.basketballPlayerStatistics(id); }
 
