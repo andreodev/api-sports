@@ -1,12 +1,16 @@
 /** Provider market IDs verified against basketball /bets. Do not infer rules
  * such as overtime inclusion from an unqualified provider label. */
-const MARKETS = new Map<number, { statistic: 'points' | 'assists' | 'rebounds'; team: 'home' | 'away' | null; milestone?: boolean }>([
+/** `points_assists` is the combined total (points + assists) of one player. */
+export type PlayerStatistic = 'points' | 'assists' | 'rebounds' | 'points_assists';
+
+const MARKETS = new Map<number, { statistic: PlayerStatistic; team: 'home' | 'away' | null; milestone?: boolean }>([
   [117, { statistic: 'points', team: null }],
   [118, { statistic: 'assists', team: null }],
   [132, { statistic: 'assists', team: 'home' }],
   [133, { statistic: 'assists', team: 'away' }],
   [135, { statistic: 'rebounds', team: 'away' }],
   [136, { statistic: 'rebounds', team: 'home' }],
+  [238, { statistic: 'points_assists', team: null }],
   [239, { statistic: 'points', team: null, milestone: true }],
 ]);
 
@@ -17,7 +21,7 @@ export interface PlayerMarketSelection {
   providerMarketName: string;
   playerName: string;
   team: 'home' | 'away' | null;
-  statistic: 'points' | 'assists' | 'rebounds';
+  statistic: PlayerStatistic;
   side: 'over' | 'under' | 'milestone';
   line: number;
   odd: number;
