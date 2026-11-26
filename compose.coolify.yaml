@@ -38,8 +38,7 @@ services:
       - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRES}
     volumes:
       - sports-postgres:/var/lib/postgresql/data
-      # Na PRIMEIRA subida (volume vazio) roda migrations/001..003 em ordem.
-      - ./migrations:/docker-entrypoint-initdb.d:ro
+      # As migrations rodam na API, a cada subida (src/database/migrate.ts).
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
       interval: 5s
