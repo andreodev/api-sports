@@ -6,6 +6,8 @@ import { isApiSportsDate } from './provider-date.js';
 import { apiSportOf } from './sports-catalog.js';
 import { basketballPlayerMarkets, type PlayerMarketSelection } from './basketball-player-markets.js';
 import { buildPlayerBoard } from '../basketball/player-board.js';
+import { parseGameTeams, playerSides, type GameTeams } from '../basketball/game-context.js';
+import { nameKey } from '../basketball/player-identity.js';
 import { normalizeFootballFixture } from '../football/fixtures.js';
 import { mapPrematchOdds } from '../football/football-odds.js';
 
@@ -184,13 +186,30 @@ export class EventsService implements OnApplicationShutdown {
     }
   }
 
+  /** Teams (with logos) of one game and the side of each rostered player name.
+   * Cached for hours: rosters and teams rarely change, and this feeds display only. */
+  private async basketballGameContext(gameId: string, priority: 'interactive' | 'background'): Promise<{ teams: GameTeams; sides: Record<string, 'home' | 'away'> } | null> {
+    const redis = await this.redis();
+    const key = `api-sports:basketball:game-context:v1:${gameId}`;
+    const cached = await redis.get(key);
+    if (cached) return JSON.parse(cached) as { teams: GameTeams; sides: Record<string, 'home' | 'away'> } | null;
+    const game = parseGameTeams((await this.providerRead('basketball', 'games', { id: gameId }, priority)).body, gameId);
+    let context: { teams: GameTeams; sides: Record<string, 'home' | 'away'> } | null = null;
+    if (game) {
+      const [home, away] = await Promise.all([game.teams.home.id, game.teams.away.id].map(async (team) => (await this.providerRead('basketball', 'players', { team, season: game.season }, priority)).body));
+      context = { teams: game.teams, sides: playerSides(home, away) };
+    }
+    await redis.set(key, JSON.stringify(context), { EX: context ? 6 * 3600 : 600 });
+    return context;
+  }
+
   async basketballPlayerMarkets(gameId: string, priority: 'interactive' | 'background' = 'interactive') {
     if (!/^[1-9]\d{0,14}$/.test(gameId) || !Number.isSafeInteger(Number(gameId))) throw new BadRequestException('Identificador de partida inválido');
     const apiKey = process.env.API_SPORTS_KEY;
     if (!apiKey) throw new ServiceUnavailableException('API-Sports não configurada');
     let redis: Awaited<ReturnType<EventsService['redis']>>;
     try { redis = await this.redis(); } catch { throw new ServiceUnavailableException('Redis indisponível'); }
-    const key = `api-sports:basketball:player-markets:v2:${gameId}`;
+    const key = `api-sports:basketball:player-markets:v3:${gameId}`;
     try {
       const cached = await redis.get(key);
       if (cached) return JSON.parse(cached) as unknown;
@@ -214,7 +233,9 @@ export class EventsService implements OnApplicationShutdown {
         const data = body as { response?: unknown; errors?: unknown; paging?: { total?: unknown } };
         if (!Array.isArray(data.response) || (data.errors && Object.keys(data.errors).length > 0) || (typeof data.paging?.total === 'number' && data.paging.total > 1)) throw new BadGatewayException('Resposta incompleta ou com erro da API-Sports');
         if (data.response.some((row: { game?: { id?: unknown } }) => String(row?.game?.id) !== gameId)) throw new BadGatewayException('Resposta não corresponde à partida');
-        const result = { gameId, observedAt: new Date().toISOString(), selections: basketballPlayerMarkets(data.response), bettable: false, reason: 'RULES_AND_PRICE_VALIDATION_REQUIRED', combinationPricing: 'UNAVAILABLE' };
+        const context = await this.basketballGameContext(gameId, priority).catch(() => null);
+        const selections = basketballPlayerMarkets(data.response).map((item) => ({ ...item, team: item.team ?? context?.sides[nameKey(item.playerName) ?? ''] ?? null }));
+        const result = { gameId, observedAt: new Date().toISOString(), teams: context?.teams ?? null, selections, bettable: false, reason: 'RULES_AND_PRICE_VALIDATION_REQUIRED', combinationPricing: 'UNAVAILABLE' };
         const serialized = JSON.stringify(result);
         await redis.set(key, serialized, { EX: 30 });
         return JSON.parse(serialized) as unknown;
@@ -231,7 +252,7 @@ export class EventsService implements OnApplicationShutdown {
    * validated for wagering and combined odds are not priced here. */
   async basketballPlayerBoard(gameId: string) {
     if (!/^[1-9]\d{0,14}$/.test(gameId) || !Number.isSafeInteger(Number(gameId))) throw new BadRequestException('Identificador de partida inválido');
-    const markets = await this.basketballPlayerMarkets(gameId) as { observedAt: string; selections: PlayerMarketSelection[] };
+    const markets = await this.basketballPlayerMarkets(gameId) as { observedAt: string; teams: GameTeams | null; selections: PlayerMarketSelection[] };
     let statistics: { observedAt: string; rows: unknown } | null = null;
     let statisticsError: string | null = null;
     try {
@@ -251,6 +272,7 @@ export class EventsService implements OnApplicationShutdown {
       oddsObservedAt: markets.observedAt,
       statisticsObservedAt: statistics?.observedAt ?? null,
       statisticsError,
+      teams: markets.teams ?? null,
       players,
       bettable: false as const,
       combinationPricing: 'UNAVAILABLE' as const,
