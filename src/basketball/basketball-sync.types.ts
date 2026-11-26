@@ -71,7 +71,7 @@ export function selectionKey(row: PlayerMarketSelection): string | null {
   if (!Number.isSafeInteger(row?.bookmakerId) || row.bookmakerId <= 0 || !Number.isSafeInteger(row.providerMarketId) || row.providerMarketId <= 0 ||
     typeof row.playerName !== 'string' || !row.playerName.trim() || row.playerName.length > 150 ||
     typeof row.bookmaker !== 'string' || !row.bookmaker.trim() || row.bookmaker.length > 150 ||
-    !['points', 'rebounds', 'assists'].includes(row.statistic) || !['over', 'under', 'milestone'].includes(row.side) ||
+    !['points', 'rebounds', 'assists', 'points_assists'].includes(row.statistic) || !['over', 'under', 'milestone'].includes(row.side) ||
     (row.side === 'milestone' && (row.providerMarketId !== 239 || row.statistic !== 'points' || !Number.isSafeInteger(row.line))) ||
     (row.team !== null && row.team !== 'home' && row.team !== 'away') ||
     !Number.isFinite(row.line) || row.line < 0 || !Number.isFinite(row.odd) || row.odd <= 1 || row.odd > 10000) return null;

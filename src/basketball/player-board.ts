@@ -1,8 +1,8 @@
 import { createHash } from 'node:crypto';
-import type { PlayerMarketSelection } from '../multisport/basketball-player-markets.js';
+import type { PlayerMarketSelection, PlayerStatistic } from '../multisport/basketball-player-markets.js';
 import { nameKey } from './player-identity.js';
 
-type Statistic = 'points' | 'rebounds' | 'assists';
+type Statistic = PlayerStatistic;
 type Side = 'over' | 'under' | 'milestone';
 
 export interface BoardPrice {
@@ -70,7 +70,7 @@ function selectionId(gameId: string, player: string, statistic: Statistic, side:
   return createHash('sha256').update(JSON.stringify([gameId, player, statistic, side, line])).digest('hex').slice(0, 24);
 }
 
-const STAT_ORDER: Record<Statistic, number> = { points: 0, rebounds: 1, assists: 2 };
+const STAT_ORDER: Record<Statistic, number> = { points: 0, rebounds: 1, assists: 2, points_assists: 3 };
 const SIDE_ORDER: Record<Side, number> = { over: 0, under: 1, milestone: 2 };
 
 /** Groups every player line and price of one game by player, next to the

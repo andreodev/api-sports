@@ -12,6 +12,7 @@ it('keeps player markets distinct and does not invent overtime rules', () => {
     { statistic: 'points', side: 'over', line: 9.5 },
     { statistic: 'rebounds', side: 'under', line: 5.5 },
     { statistic: 'assists', side: 'over', line: 1.5 },
+    { statistic: 'points_assists', side: 'over', line: 20.5 },
   ]);
   expect(selections.every((item) => item.overtimeIncluded === null)).toBe(true);
   expect(selections.every((item) => item.providerUpdatedAt === '2020-01-01T00:00:00.000Z')).toBe(true);
