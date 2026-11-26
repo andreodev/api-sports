@@ -16,8 +16,8 @@ it('reads both teams and the season, keeping only provider-hosted logos', () => 
 
 it('matches inverted names and drops names listed on both rosters', () => {
   const sides = playerSides(
-    { response: [{ name: 'Lillard Damian' }, { name: 'Common Name' }] },
-    { response: [{ name: 'Harrison Barnes' }, { name: 'Name Common' }, { name: 'X' }] },
+    { response: [{ id: 10, name: 'Lillard Damian' }, { id: 11, name: 'Common Name' }, { id: 'bad', name: 'No Id' }] },
+    { response: [{ id: 20, name: 'Harrison Barnes' }, { id: 21, name: 'Name Common' }, { id: 22, name: 'X' }] },
   );
-  expect(sides).toEqual({ 'damian lillard': 'home', 'barnes harrison': 'away' });
+  expect(sides).toEqual({ 'damian lillard': { side: 'home', playerId: '10' }, 'barnes harrison': { side: 'away', playerId: '20' } });
 });
