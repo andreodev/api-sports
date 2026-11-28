@@ -29,3 +29,15 @@ it('does not accept future or invalid provider update times', () => {
   const selections = basketballPlayerMarkets([{ ...entry, update: '2999-01-01T00:00:00Z' }, { ...entry, update: 'invalid' }, entry]);
   expect(selections.map((item) => item.providerUpdatedAt)).toEqual([null, null, null]);
 });
+
+it('reads the Betano "Player Runs" basketball market as player rebounds, and only under that label', () => {
+  const bet = (name: string) => basketballPlayerMarkets([{ bookmakers: [{ id: 31, name: 'Betano', bets: [{ id: 240, name, values: [
+    { value: 'Nikola Jokic - Over 12.5', odd: '1.85' },
+    { value: 'Nikola Jokic - Under 12.5', odd: '1.85' },
+  ] }] }] }]);
+  expect(bet('Player Runs')).toMatchObject([
+    { playerName: 'Nikola Jokic', statistic: 'rebounds', team: null, side: 'over', line: 12.5, odd: 1.85, providerMarketId: 240 },
+    { playerName: 'Nikola Jokic', statistic: 'rebounds', team: null, side: 'under', line: 12.5, odd: 1.85, providerMarketId: 240 },
+  ]);
+  expect(bet('Player Steals')).toEqual([]);
+});
