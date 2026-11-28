@@ -6,8 +6,7 @@ import { isApiSportsDate } from './provider-date.js';
 import { apiSportOf } from './sports-catalog.js';
 import { basketballPlayerMarkets, type PlayerMarketSelection } from './basketball-player-markets.js';
 import { buildPlayerBoard } from '../basketball/player-board.js';
-import { parseGameTeams, playerSides, type GameTeams, type RosterEntry } from '../basketball/game-context.js';
-import { nameKey } from '../basketball/player-identity.js';
+import { identifyPlayers, parseGameTeams, playerInitials, playerSides, type GameTeams, type RosterEntry } from '../basketball/game-context.js';
 import { normalizeFootballFixture } from '../football/fixtures.js';
 import { mapPrematchOdds } from '../football/football-odds.js';
 
@@ -188,16 +187,16 @@ export class EventsService implements OnApplicationShutdown {
 
   /** Teams (with logos) of one game and the side of each rostered player name.
    * Cached for hours: rosters and teams rarely change, and this feeds display only. */
-  private async basketballGameContext(gameId: string, priority: 'interactive' | 'background'): Promise<{ teams: GameTeams; sides: Record<string, RosterEntry> } | null> {
+  private async basketballGameContext(gameId: string, priority: 'interactive' | 'background'): Promise<{ teams: GameTeams; sides: Record<string, RosterEntry>; initials?: Record<string, RosterEntry> } | null> {
     const redis = await this.redis();
-    const key = `api-sports:basketball:game-context:v2:${gameId}`;
+    const key = `api-sports:basketball:game-context:v3:${gameId}`;
     const cached = await redis.get(key);
-    if (cached) return JSON.parse(cached) as { teams: GameTeams; sides: Record<string, RosterEntry> } | null;
+    if (cached) return JSON.parse(cached) as { teams: GameTeams; sides: Record<string, RosterEntry>; initials?: Record<string, RosterEntry> } | null;
     const game = parseGameTeams((await this.providerRead('basketball', 'games', { id: gameId }, priority)).body, gameId);
-    let context: { teams: GameTeams; sides: Record<string, RosterEntry> } | null = null;
+    let context: { teams: GameTeams; sides: Record<string, RosterEntry>; initials?: Record<string, RosterEntry> } | null = null;
     if (game) {
       const [home, away] = await Promise.all([game.teams.home.id, game.teams.away.id].map(async (team) => (await this.providerRead('basketball', 'players', { team, season: game.season }, priority)).body));
-      context = { teams: game.teams, sides: playerSides(home, away) };
+      context = { teams: game.teams, sides: playerSides(home, away), initials: playerInitials(home, away) };
     }
     await redis.set(key, JSON.stringify(context), { EX: context ? 6 * 3600 : 600 });
     return context;
@@ -209,7 +208,7 @@ export class EventsService implements OnApplicationShutdown {
     if (!apiKey) throw new ServiceUnavailableException('API-Sports não configurada');
     let redis: Awaited<ReturnType<EventsService['redis']>>;
     try { redis = await this.redis(); } catch { throw new ServiceUnavailableException('Redis indisponível'); }
-    const key = `api-sports:basketball:player-markets:v4:${gameId}`;
+    const key = `api-sports:basketball:player-markets:v5:${gameId}`;
     try {
       const cached = await redis.get(key);
       if (cached) return JSON.parse(cached) as unknown;
@@ -234,8 +233,10 @@ export class EventsService implements OnApplicationShutdown {
         if (!Array.isArray(data.response) || (data.errors && Object.keys(data.errors).length > 0) || (typeof data.paging?.total === 'number' && data.paging.total > 1)) throw new BadGatewayException('Resposta incompleta ou com erro da API-Sports');
         if (data.response.some((row: { game?: { id?: unknown } }) => String(row?.game?.id) !== gameId)) throw new BadGatewayException('Resposta não corresponde à partida');
         const context = await this.basketballGameContext(gameId, priority).catch(() => null);
-        const selections = basketballPlayerMarkets(data.response).map((item) => {
-          const entry = context?.sides[nameKey(item.playerName) ?? ''];
+        const markets = basketballPlayerMarkets(data.response);
+        const identities = context ? identifyPlayers(markets.map((item) => item.playerName), context.sides, context.initials) : new Map<string, RosterEntry>();
+        const selections = markets.map((item) => {
+          const entry = identities.get(item.playerName);
           // A market that names a side must agree with the roster, or the match is not trusted.
           const trusted = entry && (!item.team || item.team === entry.side) ? entry : null;
           return { ...item, team: item.team ?? trusted?.side ?? null, playerId: trusted?.playerId ?? null };
