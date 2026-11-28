@@ -3,7 +3,9 @@
 /** `points_assists` is the combined total (points + assists) of one player. */
 export type PlayerStatistic = 'points' | 'assists' | 'rebounds' | 'points_assists';
 
-const MARKETS = new Map<number, { statistic: PlayerStatistic; team: 'home' | 'away' | null; milestone?: boolean }>([
+/** `name` pins a market whose provider label does not describe it, so a reused
+ * ID never prices a different statistic. */
+const MARKETS = new Map<number, { statistic: PlayerStatistic; team: 'home' | 'away' | null; milestone?: boolean; name?: string }>([
   [117, { statistic: 'points', team: null }],
   [118, { statistic: 'assists', team: null }],
   [132, { statistic: 'assists', team: 'home' }],
@@ -11,7 +13,10 @@ const MARKETS = new Map<number, { statistic: PlayerStatistic; team: 'home' | 'aw
   [135, { statistic: 'rebounds', team: 'away' }],
   [136, { statistic: 'rebounds', team: 'home' }],
   [238, { statistic: 'points_assists', team: null }],
-  [239, { statistic: 'points', team: null, milestone: true }],
+  [239, { statistic: 'points', team: null, milestone: true, name: 'player points milestones' }],
+  // Betano publishes NBA player rebounds under this baseball label. Its lines
+  // are rebound totals: the highest belong to Jokic, Wembanyama, Towns, Gobert.
+  [240, { statistic: 'rebounds', team: null, name: 'player runs' }],
 ]);
 
 export interface PlayerMarketSelection {
@@ -42,7 +47,7 @@ export function basketballPlayerMarkets(data: unknown): PlayerMarketSelection[] 
       for (const bet of bookmaker.bets) {
         const definition = MARKETS.get(bet?.id);
         if (!definition || typeof bet.name !== 'string' || !Array.isArray(bet.values)) continue;
-        if (definition.milestone && bet.name.trim().toLowerCase() !== 'player points milestones') continue;
+        if (definition.name && bet.name.trim().toLowerCase() !== definition.name) continue;
         for (const value of bet.values) {
           if (typeof value?.value !== 'string' || value.value.length > 300) continue;
           const match = definition.milestone
